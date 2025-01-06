@@ -1,0 +1,102 @@
+/* General Reset */
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to bottom, #1f1b3d, #3a2f68, #5944a6);
+    color: #ffffff;
+    text-align: center;
+    background-size: cover;  
+}
+
+/* Top Section */
+.top-section {
+    padding: 50px 20px;
+    background: linear-gradient(145deg, #3f1c59, #461dad);  
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid #7227b0;
+}
+
+.top-section h1 {
+    font-size: 3em;
+    margin: 0;
+    color: #f266b5;
+    text-shadow: 0 2px 3px rgba(255, 255, 255, 0.5);
+}
+
+.top-section h2 {
+    font-size: 1.5em;
+    margin: 10px 0;
+    color: #bd93f9;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.3);
+}
+
+/* Image Container */
+.image-container {
+    margin-top: 30px;
+    border-radius: 20px;
+}
+
+.login-image {
+    display: block;
+    margin: 20px auto;
+    width: 600px;  
+    height: 350px;  
+    border-radius: 20px;  
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);  
+    object-fit: cover; /* Ensures the image fits well within the circular border */
+}
+
+/* Bottom Section */
+.bottom-section {
+    padding: 30px 0;
+    background: linear-gradient(145deg, #201538, #321f58);
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+.login-button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #ffffff;
+    background: linear-gradient(to right, #ff79c6, #bd93f9, #8be9fd);
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    
+}
+
+.login-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.4);
+}
+
+.login-button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Media Query */
+@media (max-width: 768px) {
+    .top-section h1 {
+        font-size: 2em;
+    }
+
+    .top-section h2 {
+        font-size: 1em;
+    }
+
+    .login-button {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+
+    .login-image {
+        width: 600px; /* Smaller width for smaller screens */
+        height: 400px; /* Smaller height for smaller screens */
+    }
+}

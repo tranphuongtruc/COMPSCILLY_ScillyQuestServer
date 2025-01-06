@@ -1,0 +1,75 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: linear-gradient(145deg, #3f1c59, #461dad); /* Deep purple gradient */
+    color: #ff79c6; /* Light pink text */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.container {
+    text-align: center;
+    padding: 40px;
+}
+
+/* Top Section */
+.top-section h1 {
+    font-size: 3em;
+    margin: 0 0 20px 0; /* Added 20px margin-bottom */
+    color: #f266b5;
+    text-shadow: 0 2px 3px rgba(255, 255, 255, 0.5);
+}
+
+.top-section h2 {
+    font-size: 1.5em;
+    margin: 10px 0;
+    color: #bd93f9;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.3);
+}
+
+
+/* Image Section */
+.bottom-section {
+    margin-top: 50px;
+}
+
+
+.goodbye-image {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Footer */
+.footer {
+    margin-top: 30px;
+    font-size: 0.9rem;
+    color: #ff79c6;  
+}
+
+.footer p {
+    padding: 10px;
+    background: #391f62;  
+    border-radius: 5px;
+}
+
+/* Hover Effects */
+.top-section h1:hover {
+    color: #ff79c6;  
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+
+.top-section h2:hover {
+    color: #a26fe9;  
+    transition: 0.3s;
+}

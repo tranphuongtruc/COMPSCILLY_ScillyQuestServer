@@ -1,0 +1,45 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScillyQuest</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='goodbye-styles.css') }}">
+    <script>
+        // Disable back navigation
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            alert("You’ve already submitted your test and cannot go back!");
+            history.pushState(null, null, location.href);
+        };
+
+        // Continuously monitor navigation attempts
+        setInterval(() => {
+            history.pushState(null, null, location.href);
+        }, 100);
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="top-section">
+            <h1>SCILLYQUEST ROUND 2</h1>
+            <h2>Thank You for Participating!</h2>
+            <h2>We appreciate your efforts and wish you the best of luck!</h2>
+        </div>
+
+        <div class="bottom-section">
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='thankyou.png') }}" alt="Thank You Image" class="goodbye-image">
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; ScillyQuest. All Rights Reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
+

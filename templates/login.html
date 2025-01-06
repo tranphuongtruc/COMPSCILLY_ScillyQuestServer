@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScillyQuest</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='login-styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='popup-styles.css') }}">
+</head>
+<body>
+    <div class="top-section">
+        <h1>Welcome to SCILLYQUEST ROUND 2!</h1>
+        <h2>All your information will be kept safe and used only for submission tracking.</h2>
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='login-pic.png') }}" alt="LOGIN IMAGE" class="login-image">
+        </div>
+    </div>
+    <div class="bottom-section">
+        <div class="buttons">
+            <button class="login-button" onclick="openModal()">LOG IN</button>
+        </div>
+    </div>
+
+    <!-- Popup Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>Enter Your Details</h3>
+            <input type="text" id="userID" placeholder="Enter your ID">
+            <input type="text" id="fullName" placeholder="Enter your Full Name">
+            <input type="email" id="email" placeholder="Enter your Email">
+            <button onclick="saveUserDetails()">Start Test</button>
+        </div>
+    </div>
+
+    <!-- Link to External JavaScript File -->
+    <script src="{{ url_for('static', filename='login.js') }}"></script>
+</body>
+</html>

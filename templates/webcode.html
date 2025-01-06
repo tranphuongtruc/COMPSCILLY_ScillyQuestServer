@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScillyQuest</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='webcode-styles.css') }}">
+</head>
+<body>
+    <header class="header">
+        <h1>SCILLYQUEST</h1>
+        <div class="timer" id="countdown">120:00</div>
+
+        <div class="buttons">
+            <button class="round-btn" title="Question 1" data-question="1">1</button>
+            <button class="round-btn" title="Question 2" data-question="2">2</button>
+            <button class="round-btn" title="Question 3" data-question="3">3</button>            
+            <button class="submit-code-btn" id="submit-code">Submit Code</button>
+            <button class="end-test-btn">End Test</button>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="questions-section">
+            <p>
+                <span style="font-size: 30px; color: #ff4081;">QUESTION 1</span><br><br>
+                <span style="font-size: 25px; color: rgb(0, 0, 0);">Cho a=1 và b=2</span><br>
+                <span style="font-size: 25px; color: rgb(0, 0, 0);">Xuất ra tổng a và b</span><br>
+            </p>
+        </div>
+
+        <div class="code-section">
+            <div class="dropdown">
+                <select id="language">
+                    <option value="python">Python</option>
+                    <option value="cpp">C++</option>
+                    <option value="java">Java</option>
+                </select>
+            </div>
+            <textarea id="code" placeholder="TYPE YOUR CODE..."></textarea>
+            <div class="output-section">
+                <p>Submission State</p>
+                <pre id="output"></pre>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='webcode.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+/* Modal container */
+.modal {
+    display: none; /* Ensure it is initially hidden */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal content box */
+.modal-content {
+    background: linear-gradient(145deg, #3d1f54, #7422a8);
+    padding: 40px;
+    border-radius: 10px;
+    width: 350px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #ff79c6;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column; /* Arrange inputs vertically */
+    align-items: center; /* Center inputs horizontally */
+    text-align: center; /* Center the text inside inputs */
+}
+
+/* Input fields */
+.modal-content input {
+    width: 100%; /* Set input width to 80% of the modal content */
+    margin: 15px 0;
+    padding: 10px;
+    background-color: #2e1c3e;
+    border: 1px solid #5429a1;
+    border-radius: 5px;
+    color: #ff79c6;
+    font-size: 16px;
+}
+
+/* Input field on focus */
+.modal-content input:focus {
+    outline: none;
+    border-color: #852cbd;
+    background-color: #321f58;
+}
+
+/* Button styling */
+.modal-content button {
+    padding: 12px 25px;
+    background: linear-gradient(to right, #ff79c6, #bd93f9, #8be9fd);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 15px;
+}
+
+/* Button hover effect */
+.modal-content button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.4);
+}
+
+.modal-content button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Modal close button */
+.modal-content .close {
+    color: #ff79c6;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+}
+
+/* Close button on hover */
+.modal-content .close:hover,
+.modal-content .close:focus {
+    color: #7422a8;
+}
