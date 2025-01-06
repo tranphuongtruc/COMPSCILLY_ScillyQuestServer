@@ -14,7 +14,7 @@ scope = ["https://www.googleapis.com/auth/spreadsheets",
          "https://www.googleapis.com/auth/drive"]
 
 # Load environment variables
-load_dotenv('.env-json/.env')
+load_dotenv()
 service_account_file_path = os.getenv("SERVICE_ACCOUNT_FILE")
 
 credentials = ServiceAccountCredentials.from_json_keyfile_name(
