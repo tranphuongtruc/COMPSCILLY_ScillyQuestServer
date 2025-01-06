@@ -1,5 +1,5 @@
 scillyquest-env/
-.env-json/
+scillyquest-2024-round-2.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
