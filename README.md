@@ -40,7 +40,7 @@ git clone https://github.com/tranphuongtruc/COMPSCILLY_ScillyQuestServer
 Before running the app, make sure you have all the required packages installed. Navigate to the project directory and install the dependencies from requirements.txt:
 
 ```bash
-cd scillyquest-round-2-webcode
+cd COMPSCILLY_ScillyQuestServer
 pip install -r requirements.txt
 ```
 

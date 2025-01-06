@@ -7,8 +7,8 @@
 }
 
 body {
-    background: linear-gradient(145deg, #3f1c59, #461dad); /* Deep purple gradient */
-    color: #ff79c6; /* Light pink text */
+    background: linear-gradient(145deg, #3f1c59, #461dad); 
+    color: #ff79c6;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -44,7 +44,7 @@ body {
 
 .goodbye-image {
     width: 100%;
-    max-width: 400px;
+    max-width: 450px;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
