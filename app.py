@@ -1,8 +1,10 @@
+from dotenv import load_dotenv
 import os
 from oauth2client.service_account import ServiceAccountCredentials
 import gspread
 from flask import Flask, render_template, request, jsonify
 import datetime
+
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -11,8 +13,10 @@ app = Flask(__name__)
 scope = ["https://www.googleapis.com/auth/spreadsheets",
          "https://www.googleapis.com/auth/drive"]
 
-service_account_file_path = os.path.join(
-    '.env', 'scillyquest-2024-round-2.json')
+# Load environment variables
+load_dotenv('.env-json/.env')
+service_account_file_path = os.getenv("SERVICE_ACCOUNT_FILE")
+
 credentials = ServiceAccountCredentials.from_json_keyfile_name(
     service_account_file_path, scope)
 gc = gspread.authorize(credentials)
@@ -80,4 +84,4 @@ def end_test():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
