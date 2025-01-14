@@ -105,4 +105,6 @@ We hope you enjoy participating in ScillyQuest! May the best coder win 🎉
 
 ## 🤝 Support
 If you have any questions or encounter issues, feel free to reach out to us. We're here to help!
-Email: compscilly@gmail.com
+Email: 
+- compscilly@gmail.com
+- tranphuongtruc08@gmail.com
