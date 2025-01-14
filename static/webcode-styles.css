@@ -1,179 +1,161 @@
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    /* background: linear-gradient(145deg, #391f62, #2f21a9); */
-    background: #fceffe
+function startCountdown(duration) {
+    let timer = duration;
+    const intervalId = setInterval(() => {
+        const minutes = String(Math.floor(timer / 60)).padStart(2, "0");
+        const seconds = String(timer % 60).padStart(2, "0");
+        document.getElementById("countdown").textContent = `${minutes}:${seconds}`;
+        if (--timer < 0) clearInterval(intervalId);
+    }, 1000);
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* background: linear-gradient(145deg, #4a2268, #4c21ba); */
-    background: #ffe3ee;
-    padding: 10px 20px;
-    border-bottom: 4px solid #ff4081;
+function setDefaultQuestion() {
+    const defaultQuestionNumber = '1'; // Default question number
+    const questionText1a = 'Cho a=1 và b=2';
+    const questionText1b = 'Xuất ra tổng a và b';
+
+    // Set the question content
+    document.querySelector('.questions-section').innerHTML = `
+        <p>
+            <span style="font-size: 30px; color: #e35ac3;">QUESTION ${defaultQuestionNumber}</span><br><br>
+            <span style="font-size: 25px; color: rgb(252, 252, 252);">${questionText1a}</span><br>
+            <span style="font-size: 25px; color: rgb(252, 252, 252);">${questionText1b}</span><br>
+        </p>
+    `;
+
+    // Highlight the default button
+    document.querySelectorAll('.round-btn').forEach(button => {
+        if (button.getAttribute('data-question') === defaultQuestionNumber) {
+            button.classList.add('active'); 
+        } else {
+            button.classList.remove('active');
+        }
+    });
+
+    // Reset the code area for the default question
+    const editor = document.querySelector('.CodeMirror').CodeMirror;
+    if (editor) editor.setValue('');
 }
 
-header h1 {
-    font-size: 1.8em;
-    color: #ff4081;
+document.querySelectorAll('.round-btn').forEach(button => {
+    button.addEventListener('click', (e) => {
+        const questionNumber = e.target.getAttribute('data-question');
+
+        // Update the question based on the button clicked
+        let questionText = '';
+        if (questionNumber === '1') {
+            questionText = 'Cho a=1 và b=2\nXuất ra tổng a và b';
+        } else if (questionNumber === '2') {
+            questionText = 'Example question for 2';
+        } else if (questionNumber === '3') {
+            questionText = 'Example question for 3';
+        }
+
+        // Update the question text in the HTML
+        document.querySelector('.questions-section').innerHTML = `
+            <p>
+                <span style="font-size: 30px; color: #f4b9f0;">QUESTION ${questionNumber}</span><br><br>
+                <span style="font-size: 25px; color: rgb(255, 255, 255);">${questionText}</span><br>
+            </p>
+        `;
+
+        // Highlight the selected button
+        document.querySelectorAll('.round-btn').forEach(btn => btn.classList.remove('active'));
+        e.target.classList.add('active');
+
+        // Reset the code area for the selected question
+        const editor = document.querySelector('.CodeMirror').CodeMirror;
+        if (editor) editor.setValue('');
+    });
+});
+
+document.getElementById("submit-code").addEventListener("click", () => {
+    const editor = document.querySelector('.CodeMirror').CodeMirror;
+    const code = editor ? editor.getValue() : '';
+    const language = document.getElementById("language").value;
+    const outputElement = document.getElementById("output");
+    const activeButton = document.querySelector('.round-btn.active');
+    const questionNumber = activeButton ? activeButton.getAttribute('data-question') : null;
+
+    const userID = localStorage.getItem("userID");
+    const fullName = localStorage.getItem("fullName");
+    const email = localStorage.getItem("email");
+
+    if (!userID || !fullName || !email) {
+        outputElement.textContent = "User details are missing! Please log in again.";
+        return;
+    }
+
+    if (!code.trim()) {
+        outputElement.textContent = "Please type your code!";
+        return;
+    }
+
+    if (!questionNumber) {
+        outputElement.textContent = "Please select a question!";
+        return;
+    }
+
+    fetch("/test_code", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            userID,
+            fullName,
+            email,
+            code,
+            language,
+            q_num: questionNumber
+        }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            outputElement.textContent = data.success
+                ? data.message
+                : `Error: ${data.message}`;
+        })
+        .catch((error) => {
+            outputElement.textContent = `Error: ${error.message}`;
+        });
+});
+
+// Initialize the page with default question and countdown
+window.onload = () => {
+    startCountdown(7200);
+    setDefaultQuestion();
+};
+
+// Handle tab for 4 spaces in code editor
+document.addEventListener('DOMContentLoaded', function () {
+    const textarea = document.getElementById('code');
+    textarea.addEventListener('keydown', function (event) {
+        if (event.key === 'Tab') {
+            event.preventDefault();
+            const start = this.selectionStart;
+            const end = this.selectionEnd;
+            this.value = this.value.substring(0, start) + '    ' + this.value.substring(end);
+            this.selectionStart = this.selectionEnd = start + 4;
+        }
+    });
+});
+
+
+document.querySelector(".end-test-btn").addEventListener("click", () => {
+    // Confirmation dialog
+    const userConfirmed = window.confirm("Are you sure you've submitted all the questions? You won't be able to go back.");
+
+    if (userConfirmed) {
+        sessionStorage.setItem("testEnded", "true");
+        window.location.replace("/end_test");
+    }
+});
+
+if (sessionStorage.getItem("testEnded") === "true") {
+    // Disable the back navigation by pushing a new history state
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = function() {
+        // Keep pushing the same state when back button is pressed
+        window.history.pushState(null, null, window.location.href);
+    };
 }
 
-.timer {
-    flex: 1;
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
-    color: #080808;
-}
 
-
-button {
-    font-size: 16px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease; 
-    outline: none;
-}
-
-
-.round-btn.active {
-    background-color: #d11151;  
-    color: #fff; 
-    border-color: #ae063e;  
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  
-    transform: scale(1.1);  
-}
-
-.round-btn {
-    width: 40px; 
-    height: 40px;
-    background-color: #ff4081; 
-    color: white;  
-    border-radius: 50%; 
-    font-size: 16px;  
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease; 
-}
-
-.round-btn:hover {
-    background-color: #d9366f;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-}
-
-.round-btn:active {
-    background-color: #b12c59;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-}
-
-
-.submit-code-btn {
-    background-color: #208bbd;
-    color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-}
-
-.submit-code-btn:hover {
-    background-color: #10719e; 
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); 
-}
-
-.submit-code-btn:active {
-    background-color: #0b4f6f; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
-}
-
-.end-test-btn {
-    background-color: #1d9922; 
-    color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-}
-
-.end-test-btn:hover {
-    background-color: #126514;
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); 
-}
-
-.end-test-btn:active {
-    background-color: #073c09; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.buttons {
-    display: flex;
-    gap: 10px; /* Spacing between buttons */
-    justify-content: flex-end; /* Align buttons to the right */
-}
-
-
-
-.main-container {
-    display: flex;
-    padding: 25px;
-    gap: 20px;
-}
-
-.questions-section {
-    flex: 1;
-    /* background-color: #f8bbd0; */
-    background-color: #fdc4db;
-    padding: 15px;
-    border-radius: 10px;
-    overflow-y: scroll;
-    max-height: 600px;
-}
-
-.questions-section p {
-    font-size: 1em;
-    text-align: center;
-    font-weight: bold;
-    color: #444;
-}
-
-.code-section {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.code-section .dropdown p,
-.code-section .output-section p {
-    /* background-color: #f8bbd0; */
-    background-color: #fdc4db;
-    text-align: center;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 1em;
-    color: #151515;
-    font-weight: bold;
-}
-
-.code-section textarea {
-    height: 320px;
-    resize: none;
-    border: 2px solid #ff4081;
-    border-radius: 10px;
-    padding: 10px;
-    font-size: 1.4em;
-    background-color: f5effe;
-}
-
-.output-section pre {
-    background-color: #ffe3ee;
-    border: 2px solid #ff4081;
-    padding: 10px;
-    border-radius: 10px;
-    font-size: 1em;
-    color: #444;
-    min-height: 80px;
-}
