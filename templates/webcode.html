@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ScillyQuest</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='webcode-styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/theme/dracula.min.css">
+
 </head>
 <body>
     <header class="header">
@@ -23,9 +26,9 @@
     <main class="main-container">
         <div class="questions-section">
             <p>
-                <span style="font-size: 30px; color: #ff4081;">QUESTION 1</span><br><br>
-                <span style="font-size: 25px; color: rgb(0, 0, 0);">Cho a=1 và b=2</span><br>
-                <span style="font-size: 25px; color: rgb(0, 0, 0);">Xuất ra tổng a và b</span><br>
+                <span id="question-title">QUESTION 1</span>
+                <span>Cho a=1 và b=2</span><br>
+                <span>Xuất ra tổng a và b</span><br>
             </p>
         </div>
 
@@ -46,5 +49,11 @@
     </main>
 
     <script src="{{ url_for('static', filename='webcode.js') }}"></script>
+    <script src="{{ url_for('static', filename='codemirror.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.12/mode/clike/clike.min.js"></script>
+
 </body>
 </html>
