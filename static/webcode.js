@@ -10,13 +10,15 @@ function startCountdown(duration) {
 
 function setDefaultQuestion() {
     const defaultQuestionNumber = '1'; // Default question number
-    const questionText = 'Cho a=1 và b=2\nXuất ra tổng a và b';
+    const questionText1a = 'Cho a=1 và b=2';
+    const questionText1b = 'Xuất ra tổng a và b';
 
     // Set the question content
     document.querySelector('.questions-section').innerHTML = `
         <p>
-            <span style="font-size: 30px; color: #ff4081;">QUESTION ${defaultQuestionNumber}</span><br><br>
-            <span style="font-size: 25px; color: rgb(0, 0, 0);">${questionText}</span><br>
+            <span style="font-size: 30px; color: #e35ac3;">QUESTION ${defaultQuestionNumber}</span><br><br>
+            <span style="font-size: 25px; color: rgb(252, 252, 252);">${questionText1a}</span><br>
+            <span style="font-size: 25px; color: rgb(252, 252, 252);">${questionText1b}</span><br>
         </p>
     `;
 
@@ -30,7 +32,8 @@ function setDefaultQuestion() {
     });
 
     // Reset the code area for the default question
-    document.getElementById('code').value = '';
+    const editor = document.querySelector('.CodeMirror').CodeMirror;
+    if (editor) editor.setValue('');
 }
 
 document.querySelectorAll('.round-btn').forEach(button => {
@@ -50,8 +53,8 @@ document.querySelectorAll('.round-btn').forEach(button => {
         // Update the question text in the HTML
         document.querySelector('.questions-section').innerHTML = `
             <p>
-                <span style="font-size: 30px; color: #ff4081;">QUESTION ${questionNumber}</span><br><br>
-                <span style="font-size: 25px; color: rgb(0, 0, 0);">${questionText}</span><br>
+                <span style="font-size: 30px; color: #f4b9f0;">QUESTION ${questionNumber}</span><br><br>
+                <span style="font-size: 25px; color: rgb(255, 255, 255);">${questionText}</span><br>
             </p>
         `;
 
@@ -60,12 +63,14 @@ document.querySelectorAll('.round-btn').forEach(button => {
         e.target.classList.add('active');
 
         // Reset the code area for the selected question
-        document.getElementById('code').value = '';
+        const editor = document.querySelector('.CodeMirror').CodeMirror;
+        if (editor) editor.setValue('');
     });
 });
 
 document.getElementById("submit-code").addEventListener("click", () => {
-    const code = document.getElementById("code").value;
+    const editor = document.querySelector('.CodeMirror').CodeMirror;
+    const code = editor ? editor.getValue() : '';
     const language = document.getElementById("language").value;
     const outputElement = document.getElementById("output");
     const activeButton = document.querySelector('.round-btn.active');
@@ -113,27 +118,21 @@ document.getElementById("submit-code").addEventListener("click", () => {
         });
 });
 
-
 // Initialize the page with default question and countdown
 window.onload = () => {
     startCountdown(7200);
     setDefaultQuestion();
 };
 
-// 1 tab = 4 space
+// Handle tab for 4 spaces in code editor
 document.addEventListener('DOMContentLoaded', function () {
     const textarea = document.getElementById('code');
-
     textarea.addEventListener('keydown', function (event) {
         if (event.key === 'Tab') {
-            event.preventDefault(); // Prevent the default tab behavior
+            event.preventDefault();
             const start = this.selectionStart;
             const end = this.selectionEnd;
-
-            // Insert 4 spaces at the current cursor position
             this.value = this.value.substring(0, start) + '    ' + this.value.substring(end);
-
-            // Move the cursor after the inserted spaces
             this.selectionStart = this.selectionEnd = start + 4;
         }
     });
@@ -141,6 +140,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 document.querySelector(".end-test-btn").addEventListener("click", () => {
-    // Redirect to the goodbye page
-    window.location.href = "/end_test";
+    // Confirmation dialog
+    const userConfirmed = window.confirm("Are you sure you've submitted all the questions? You won't be able to go back.");
+
+    if (userConfirmed) {
+        sessionStorage.setItem("testEnded", "true");
+        window.location.replace("/end_test");
+    }
 });
+
+if (sessionStorage.getItem("testEnded") === "true") {
+    // Disable the back navigation by pushing a new history state
+    window.history.pushState(null, null, window.location.href);
+    window.onpopstate = function() {
+        // Keep pushing the same state when back button is pressed
+        window.history.pushState(null, null, window.location.href);
+    };
+}
+
+
